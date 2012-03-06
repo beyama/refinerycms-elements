@@ -1,0 +1,83 @@
+widgets.EssenceNumberView = ElementsEditor.EssenceView.extend({
+
+  events: {
+    "change input": "inputChanged"
+  },
+
+  integerRegex: /^\s*(\+|-)?\d+\s*$/,
+
+  floatRegex: /^\s*(\+|-)?\d+[\.]?\d+$/,
+
+  errorClass: 'fieldWithErrors',
+
+  initialize: function() {
+    ElementsEditor.EssenceView.prototype.initialize.apply(this, arguments);
+    
+    this.minimum = this.property.get('minimum');
+    this.maximum = this.property.get('maximum');
+  },
+
+  render: function() {
+    ElementsEditor.EssenceView.prototype.render.apply(this, arguments);
+
+    var enumeration = this.property.get('enum');
+    if(enumeration && enumeration.length) {
+      this.selectbox = this.make('select');
+
+      var self = this;
+      _.each(enumeration, function(c) {
+        if(typeof c == 'number' && self.property.get('typename') == 'Float') {
+          c = Math.floor(c) === c ? c.toString() + '.0' : c.toString();
+        }
+        $(self.selectbox).append(self.make('option', { value: c }, c));
+      });
+
+      $(this.el).append(this.selectbox);
+      $(this.selectbox).sb();
+    } else {
+      this.input = this.make('input', {
+        id: this.getInputId(),
+        name: this.getInputName(),
+        type: 'text'
+      }, this.getValue());
+
+      $(this.el).append(this.input);
+    }
+    return this;
+  },
+
+  inputChanged: function() {
+    var value = $(this.input).val();
+
+    if(this.isValid(value)) {
+      if(value.length)
+        this.setValue(Number(value));
+      $(this.el).removeClass(this.errorClass);
+    } else {
+      $(this.el).addClass(this.errorClass);
+    }
+  },
+
+  isValid: function(value) {
+    if(value.length) {
+      var regex = this.property.get('typename') === 'Float' ? this.floatRegex : this.integerRegex;
+
+      if(!regex.test(value)) 
+        return false;
+
+      value = Number(value);
+
+      if(this.minimum !== null && value < this.minimum)
+        return false;
+      if(this.maximum !== null && value > this.maximum)
+        return false;
+    } else {
+      // required?
+      if(this.property.get('required'))
+        return false;
+    }
+    return true;
+  }
+
+});
+/* vim: set filetype=javascript: */

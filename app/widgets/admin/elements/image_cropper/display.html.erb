@@ -1,0 +1,29 @@
+<% ar_lock = widget_id + '_resizable' %>
+
+<%= widget_div :class => 'imageCropper dialog_container' do %>
+  <%= image_tag @thumb.url %>
+
+  <%= form_tag url_for_event(:crop, :source => 'image_cropper', :id => @image), :remote => true do %>
+    <div class='options'>
+      <%= label_tag ar_lock, 'Aspect ratio:' %>
+      <%= check_box_tag ar_lock, '1', false, :class => 'ar_lock' %>
+
+      <%= label_tag 'width', 'Width:' %>
+      <%= text_field_tag 'width', '', :size => 5, :class => 'width', :id => '' %>
+
+      <%= label_tag 'height', 'Height:' %>
+      <%= text_field_tag 'height', '', :size => 5, :class => 'height', :id => '' %>
+
+      <%= label_tag 'save_as_copy', 'Save as copy:' %>
+      <%= check_box_tag 'save_as_copy', '1', false, :class => 'save_as_copy', :id => '' %>
+    </div>
+
+    <div class='form-actions'>
+      <div class='form-actions-left'>
+        <%= submit_tag 'Crop', :class => 'button' %>
+        <a href='#' class='closeDialog button'>Close</a>
+      </div>
+      <div class='form-actions-right'></div>
+    </div>
+  <% end %>
+<% end %>

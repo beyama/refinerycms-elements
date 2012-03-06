@@ -1,0 +1,158 @@
+widgets.EssenceResourceView = ElementsEditor.EssenceView.extend({
+  togglable: true,
+
+  className: 'property field resourceView',
+
+  events: helper.inheritEvents(ElementsEditor.EssenceView, {
+    "click .remove": "removeResource"
+  }),
+
+  initialize: function() {
+    ElementsEditor.EssenceView.prototype.initialize.apply(this, arguments);
+
+    if(!this.getValue()) {
+      this.setValue(new Elements.EssenceResource());
+      this.hasResource = false;
+    } else {
+      this.hasResource = true;
+    }
+
+    // Callback function
+    var self = this;
+    window[this.cid + '_changed'] = function(resource){
+      // Close and remove dialog
+      $('iframe#dialog_iframe').dialog("close");
+      $('iframe#dialog_iframe').remove().parents(".ui-dialog").remove();
+       
+      self.getValue().set(resource);
+    }
+
+    this.getValue().bind('change:id', function(model, id) {
+      this.hasResource = !!id;
+      $(this.input).val(id);
+
+      if(this.hasResource) {
+        $(this.insertLink).hide();
+        $(this.container).show();
+      } else {
+        $(this.insertLink).show();
+        $(this.container).hide();
+      }
+    }, this);
+
+    this.getValue().bind('change:html', function(model, html) {
+      $(this.title).html(html);
+    }, this);
+
+    this.getValue().bind('change:href', function(model, href) {
+      if(!this.hasResource) return;
+
+      $(this.resourceLink).attr('href', href);
+      $(this.updateLink).attr('href', this.getUpdateHref());
+    }, this);
+
+    this.parent.bind('view:DOMNodeInserted', function onNodeInserted() {
+      this.parent.unbind('view:DOMNodeInserted', onNodeInserted);
+
+      window.init_modal_dialogs();
+    }, this);
+  }, 
+
+  render: function() {
+    ElementsEditor.EssenceView.prototype.render.apply(this, arguments);
+
+    // Input
+    this.input = this.make('input', { type: 'hidden', name: this.getInputName(), value: this.getValue().id });
+    $(this.el).append(this.input);
+
+    // Insert link
+    this.insertLink = this.make('a', { 
+      href: this.getInsertHref(),
+      'class': 'add_icon no_resource_selected'
+    }, I18n.t('js.admin.elements.essence_resource_view.add'));
+    
+    $(this.el).append(this.insertLink);
+
+    // Current resource container
+    this.container = this.make('div', { 'class': 'resourceContainer' });
+    $(this.el).append(this.container);
+
+    // Title
+    this.title = this.make('span', { 'class': 'title' }, this.getValue().get('html'));
+
+    // Toolbar
+    this.toolbar = this.make('span', { 'class': 'toolbar' });
+
+    // Download current resource link
+    var icon = this.make('img', { 
+      height: 16, 
+      width: 16, 
+      src: '/images/refinery/icons/page_white_put.png',
+      alt: I18n.t('js.admin.elements.essence_resource_view.download')
+    });
+    this.resourceLink = this.make('a', { 
+      href: this.getValue().get('href'), 
+      'class': 'download', target: '_blank',
+      title: I18n.t('js.admin.elements.essence_resource_view.download')
+    }, icon);
+
+    // Update current resource link
+    icon = this.make('img', { 
+      height: 16, 
+      width: 16, 
+      src: '/images/refinery/icons/application_edit.png', 
+      alt: I18n.t('js.admin.elements.essence_resource_view.update')
+    });
+    this.updateLink = this.make('a', { 
+      href: this.getUpdateHref(),
+      'class': 'update',
+      title: I18n.t('js.admin.elements.essence_resource_view.update')
+    }, icon);
+
+    // Remove curent resource link
+    icon = this.make('img', { 
+      height: 16,
+      width: 16, 
+      src: '/images/refinery/icons/delete.png', 
+      alt: I18n.t('js.admin.elements.essence_resource_view.remove')
+    });
+    this.removeLink = this.make('a', { 
+      href: '#',
+      'class': 'remove',
+      title: I18n.t('js.admin.elements.essence_resource_view.remove')
+    }, icon);
+
+    $(this.toolbar)
+      .append(this.resourceLink)
+      .append(this.updateLink)
+      .append(this.removeLink);
+
+    $(this.container)
+      .append(this.title)
+      .append(this.toolbar);
+
+    if(!this.hasResource) $(this.container).hide();
+
+    return this;
+  },
+
+  getInputName: function() {
+    return this.parent.getInputName() + '[' + this.property.get('name') + '_id]';
+  },
+
+  getInsertHref: function() {
+    return '/refinery/resources/insert?callback=' + this.cid + '_changed&dialog=true';
+  },
+
+  getUpdateHref: function() {
+    return this.getInsertHref() + '&current_link=' + encodeURIComponent(this.getValue('href') || '');
+  },
+
+  removeResource: function() {
+    this.getValue().clear();
+    return false;
+  }
+
+});
+
+/* vim: set filetype=javascript: */

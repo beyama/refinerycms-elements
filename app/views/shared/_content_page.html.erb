@@ -1,0 +1,26 @@
+<%
+  partial = 'shared/elements_content_page'
+
+  if @page && !@element
+    @element = @page.element_translation
+  end
+
+  if @element
+    klass = @element.class
+    name = "elements/#{klass.name.demodulize.underscore}"
+
+    if @lookup_context.exists?(name, nil, true)
+      partial = name
+    else
+      while (klass = klass.superclass) && klass < Elements::Element
+        name = "elements/#{klass.name.demodulize.underscore}"
+        if @lookup_context.exists?(name, nil, true)
+          partial = name
+          break
+        end
+      end
+    end
+  end
+-%>
+
+<%= render partial %>

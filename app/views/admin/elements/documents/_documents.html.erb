@@ -1,0 +1,4 @@
+<ul id='sortable_list'>
+  <% collection = searching? ? @documents : @documents.select{|d| d.parent_id.nil? } %>
+  <%= render :partial => 'document', :collection => collection %>
+</ul>

@@ -1,0 +1,39 @@
+de:
+  js:
+    admin:
+      elements:
+        editor:
+          type: "Typ: "
+          locale: "Sprache: "
+        list_view:
+          add_element: Element hinzufügen
+        essence_image_view:
+          remove: Bild entfernen
+          crop: Bereich ausschneiden
+          change: Bild wechseln
+          view: Bild anzeigen
+          select: Bild auswählen
+        essence_resource_view:
+          add: Datei auswählen
+          download: Datei herunterladen
+          update: Datei austauschen
+          remove: Datei entfernen
+        picture_list_view:
+          add: Bild hinzufügen
+        picture_view:
+          click_to_edit: Zum editieren klicken ...
+          cancel: Abbrechen
+          submit: Übernehmen
+  plugins:
+    refinerycms_elements:
+      title: Elements
+  admin:
+    elements:
+      documents:
+        records:
+          no_items_yet: Es sind noch keine Dokumente angelegt. Klick "Neues Dokument anlegen" um dein erstes Dokument hinzuzufügen.
+        actions:
+          create_new: Neues Dokument anlegen
+        document:
+          edit: Bearbeite dieses Dokument
+          delete: Lösche dieses Dokument für immer

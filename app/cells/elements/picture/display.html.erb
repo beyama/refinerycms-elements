@@ -1,0 +1,7 @@
+<div class='element picture'>
+  <%= image_tag @element.image.url, :alt => @element.caption %>
+  <% if @element.caption.present? %>
+    <br/>
+    <%= content_tag 'span', @element.caption, :class => 'caption' %>
+  <% end %>
+</div>

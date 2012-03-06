@@ -1,0 +1,26 @@
+<div class='wym_skin_refinery page_part' id='page_elements_editor'>
+</div>
+
+<%= render 'admin/elements/shared/javascript_libraries' %>
+
+<% content_for :javascripts do %>
+  <%= javascript_tag do %>
+
+    $(function() {
+      Elements.init(<%= @descriptors.to_json.html_safe %>);
+
+      var editor = new Elements.ElementsEditor({ 
+        el: $('#page_elements_editor'), 
+        <% if @element %>
+          jsonData: <%= @element.to_json.html_safe %>, 
+        <% end %>
+        baseName: 'page[elements_attributes]',
+        currentLocale: '<%= Globalize.locale %>',
+        elementBase: 'PageElement'
+      });
+
+      Backbone.history.start();
+    });
+
+  <% end %>
+<% end %>

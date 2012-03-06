@@ -1,0 +1,11 @@
+<ul class='element gallery'>
+  <% @pictures.each do |picture| %>
+    <% 
+      i = picture.image 
+      c = picture.caption
+    %>
+    <li>
+    <%= link_to image_tag(i.thumbnail("200x200#c").url, :alt => c), i.thumbnail("900x600").url, :title => c %>
+    </li>
+  <% end %>
+</ul>

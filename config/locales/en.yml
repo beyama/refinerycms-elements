@@ -1,0 +1,39 @@
+en:
+  js:
+    admin:
+      elements:
+        editor:
+          type: "Type: "
+          locale: "Locale: "
+        list_view:
+          add_element: Add element
+        essence_image_view:
+          remove: Remove current image
+          crop: Crop current image
+          change: Change current image
+          view: View current image
+          select: Select image
+        essence_resource_view:
+          add: Add resource
+          download: Download
+          update: Change resource
+          remove: Remove resource
+        picture_list_view:
+          add: Add picture'
+        picture_view:
+          click_to_edit: Click to edit...
+          cancel: Cancel
+          submit: OK
+  plugins:
+    refinerycms_elements:
+      title: Elements
+  admin:
+    elements:
+      documents:
+        records:
+          no_items_yet: There are no documents yet. Click "Add New Document" to add your first document.
+        actions:
+          create_new: Add New Document
+        document:
+          edit: Edit this document
+          delete: Remove this document forever

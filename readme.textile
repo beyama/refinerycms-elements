@@ -1,0 +1,214 @@
+h1. Refinery CMS Elements
+
+Elements is an "entity–attribute–value model" system for "Refinery CMS":http://refinerycms.com/ . 
+It automatically generates models and forms based on your schema definitions. 
+
+h2. Features
+
+The Elements engine has the following key features:
+
+* add properties to your pages and Elements documents without touching your database schema
+* define embeddable complex types of data (elements)
+* it supports different types of data (text, integer, float, boolean, date, datetime, image, resource, any, element and array) for your properties
+* built-in form editor, that automatically renders forms for your elements
+* it has an extensible widget system for the form editor; including widgets for color, rich text, pictures, resources and the basic data types
+* built-in image cropper
+* built-in image gallery to append images to your pages/documents
+
+h2. Requirements
+
+Refinery CMS version 1.0.9 or above.
+
+h2. Installation
+
+To install, add refinerycms-elements to your @Gemfile@ and run `bundle install`:
+
+<pre>
+git "git://github.com/beyama/refinerycms-elements.git"
+</pre>
+
+After Elements is installed, you will need to generate the migration files and migrate your database:
+
+<pre>
+rails g refinerycms_elements
+rake db:migrate
+</pre>
+
+h2. Documentation
+
+h3. Definition of an element schema
+
+Elements are defined by a schema. A schema simply consists of a name, optionally a parent schema (parent element) and a list of properties with optional constraints.
+
+Here is an example of using the elements builder:
+
+
+<pre>
+<code>
+  Elements::ElementBuilder.create :album do |e|
+    e.parent :embedded_element
+
+    e.title 'Album'
+
+    e.text :title, :required => true, :minimum => 1, :maximum => 250
+    e.text :interpret, :minimum => 1, :maximum => 250
+    e.text :description, :widget => 'EssenceRichTextView'
+
+    e.resource :sample_song
+  end
+</code>
+</pre>
+
+This defines a simple album element with four properties.
+There are three self explaining builder methods: create, update and create_or_update. Each of them yields a property builder to describe the properties.
+
+Possible property types are text, integer, float, boolean, date, datetime, color, image, resource, any, element and array. 
+The type 'any' is a special type, you can assign any ActiveRecord model to it (polymorphic association).
+
+Possible options for properties are (all are optional):
+
+* pattern: a regular expression for text properties
+* required: boolean, true if property required otherwise false (default is false)
+* minimum: minimum length of a text property or minimum value of a number property
+* maximum: maximum length of a text property or maximum value of a number property
+* default: a default value
+* enum: an array of possible values (in some widgets rendered as selectbox)
+* widget: the name of the form widget to use (see below)
+
+h3. Editor widgets
+
+Widgets are used to render form input elements in the elements editor. The editor and the widgets are realized with "Backbone.js":http://documentcloud.github.com/backbone/.
+
+The following widgets are already built-in:
+
+* EssenceTextView: Renders a text input or textarea depending on the maximum length (default widget for text properties)
+* EssenceNumberView: Renders a text input for integer and float properties (default widget for integer and float properties)
+* EssenceBooleanView: Renders a checkbox (default widget for boolean properties)
+* EssenceColorView: Renders a color chooser (default widget for color properties)
+* EssenceRichTextView: A widget for text properties, it starts a wym editor
+* EssenceImageView: Renders an image chooser and allows cropping of images (default widget for image properties)
+* EssenceResourceView: Renders a resource chooser
+* ListView: A container widget to add elements to an array (default widget for array properties)
+
+h3. Element inheritance
+
+Elements are inheritable. This is used internally to distinct three basic types of elements: EmbeddedElement, PageElement and DocumentElement.
+
+Embedded elements are embeddable in page- and document-elements. Page elements can be associated to Refinery pages. Document elements are standalone and can be managed by the Elements back end.
+
+h3. Views for page elements
+
+Elements offers the ability to add views for page elements. It looks for views under 'app/views/elements/' for a partial named like the page element underscored type name. If there is no partial found, it goes backwards up the type inheritance chain for a partial with matching name.
+
+*For example:*
+
+You have a page element 'GrandchildPage' which inherits from 'ChildPage' which inherits from 'ParentPage'. 
+Elements will first look for a partial named '_grandchild_page.html.erb', if not found, for a partial named '_child_page.html.erb' and so on.
+
+h3. Views for embedded elements
+
+Elements is using Cells:https://github.com/apotonick/cells for rendering embedded elements. For examples see under 'app/cells/elements/'.
+
+A Cell-class has to be named like your element with the extension 'Cell', if there was no Cell found, it goes backwards up the type inheritance chain of your element for a Cell with a matching name.
+
+h3. Usage of element classes
+
+Elements classes are defined under the module 'Elements::Types'. You can use them like any other ActiveRecord model.
+
+*For example:*
+
+<pre>
+<code>
+  Elements::ElementBuilder.create :person do |e|
+    e.title 'Person'
+
+    e.text :first_name, :maximum => 250
+    e.text :last_name, :maximum => 250
+    e.date :birthday
+  end
+
+  # after compiling the model by reloading the page, restarting the application or calling Elements::Types.reload!
+
+  Elements::Types::Person.create :first_name => 'John', :last_name => 'Doe', :birthday => Date.parse('9/9/1989')
+</code>
+</pre>
+
+h2. Examples
+
+h3. Definition of an embeddable picture element schema (derived from EmbeddedElement)
+
+<pre>
+<code>
+  Elements::ElementBuilder.create :picture do |e|
+    e.parent :embedded_element
+    e.title 'Picture element'
+
+    e.image :image
+    e.text :caption, :maximum => 250
+  end
+</code>
+</pre>
+
+h3. Definition of a new page element schema (derived from PageElement)
+
+<pre>
+<code>
+  Elements::ElementBuilder.create :standard_page do |e|
+    e.parent :page_element
+    e.title 'Standard page'
+
+    e.image :teaser_image, :title => "Teaser image"
+    e.text  :teaser_text,  :title => "Teaser text", :maximum => 500, :widget => "EssenceRichTextView"
+    e.image :header_image, :title => "Header image"
+    e.text  :header_text,  :title => "Header text", :widget => "EssenceRichTextView"
+    e.image :headline_image, :title => "Headline image"
+    e.array :elements
+    e.array :side_elements
+  end
+</pre>
+</code>
+
+h3. Sample usage in your html.erb partial
+
+<pre>
+  <code>
+    <% if @element.has_property?(:header_image) && @element.header_image.present? %>
+      <%
+        image = @element.header_image.image.thumb('950x420#')
+        style = "background: url(#{image.url}) no-repeat 0 0;"
+      %>
+      <div id="header-image" style="<%= style %>"></div>
+    <% end %>
+  </code>
+</pre>
+
+h2. To do
+
+* more tests, more documentations (especially for the backbone.js based parts)
+* migration to Refinery CMS 2.x
+* support for adding css classes to elements (css class selectbox in elements)
+* implementation of form widgets for date and datetime
+* implementation of a widget for linking elements with Elements documents
+* support of element up casts
+* integration of property/element descriptions in the front end
+* create a Gem
+
+h2. How to contribute
+
+If you find what looks like a bug:
+
+# Check the "GitHub issue tracker":http://github.com/beyama/refinerycms-elements/issues/ to see if anyone else has reported an issue.
+# If you don't see anything, create an issue with information about how to reproduce it.
+
+If you want to contribute an enhancement or a fix:
+
+# Fork the project on github.
+# Make your changes with tests.
+# Commit the changes without making changes to any files that aren't related to your enhancement or fix.
+# Send a pull request.
+
+h2. License
+
+Designed and created by Alexander Jentz, Germany. 
+
+MIT License. See the included MIT-LICENSE file.

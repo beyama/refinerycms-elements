@@ -1,0 +1,8 @@
+<section id='records' class='<%= searching? ? 'list' : 'tree' %>'>
+  <%= render 'records' %>
+</section>
+<aside id='actions'>
+  <%= render 'actions' %>
+</aside>
+<%= render :partial => "/shared/admin/make_sortable",
+           :locals => {:tree => true} if @documents.many? && !searching? -%>

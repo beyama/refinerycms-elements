@@ -1,0 +1,29 @@
+<li class='clearfix record <%= cycle('on', 'on-hover') %>' id="<%= dom_id(document) -%>">
+  <div class='clearfix'>
+    <span class='title'>
+      <%= document.title %>
+      <span class="preview">
+        <% document.locales.compact.sort.each do |locale| -%>
+          <%= link_to refinery_icon_tag("flags/#{locale}.png", :size => '16x11'),
+            edit_admin_elements_document_path(document, :anchor => "locale/#{locale}"), 
+            :class => 'locale' -%>
+        <% end -%>
+      </span>
+    </span>
+    <span class='actions'>
+      <%= link_to refinery_icon_tag("application_edit.png"), edit_admin_elements_document_path(document),
+           :title => t('.edit') %>
+      <%= link_to refinery_icon_tag("delete.png"), admin_elements_document_path(document),
+          :class => "cancel confirm-delete",
+          :title => t('.delete'),
+          :confirm => t('message', :scope => 'shared.admin.delete', :title => document.title),
+          :method => :delete %>
+    </span>
+  </div>
+
+  <% unless searching? -%>
+    <ul class='nested'>
+      <%= render :partial => 'document', :collection => document.children %>
+    </ul>
+  <% end -%>
+</li>
