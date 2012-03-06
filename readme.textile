@@ -24,7 +24,7 @@ h2. Installation
 To install, add refinerycms-elements to your @Gemfile@ and run `bundle install`:
 
 <pre>
-git "git://github.com/beyama/refinerycms-elements.git"
+gem "refinerycms-elements", :git => "git://github.com/beyama/refinerycms-elements.git"
 </pre>
 
 After Elements is installed, you will need to generate the migration files and migrate your database:
