@@ -7,6 +7,6 @@ Gem::Specification.new do |s|
   s.summary           = 'Elements engine for Refinery CMS'
   s.require_paths     = %w(lib)
   s.files             = Dir['lib/**/*', 'config/**/*', 'app/**/*', 'db/**/*', 'public/**/*']
-  s.add_dependency    'apotomo',  '~>1.2.1'
+  s.add_dependency    'apotomo',  '1.2.1'
   s.add_dependency    'acts_as_list',  '~>0.1.4'
 end
