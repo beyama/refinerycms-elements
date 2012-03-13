@@ -85,7 +85,6 @@ class CreateElementsStructure < ActiveRecord::Migration
       t.timestamps
     end
 
-    load(Rails.root.join('db', 'seeds', 'elements.rb'))
   end
 
   def self.down

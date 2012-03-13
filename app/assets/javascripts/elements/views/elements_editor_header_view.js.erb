@@ -1,0 +1,100 @@
+/**
+ * ElementsEditorHeaderView
+ *
+ * Options:
+ * * supportedLocales: Supported locales
+ * * elementBase: Base class of choosable elements (optional, default: 'DocumentElement')
+ */
+Elements.ElementsEditor.ElementsEditorHeaderView = Elements.View.extend({
+  tagName: 'header',
+
+  className: 'elements-editor-header',
+
+  initialize: function() {
+    this.supportedLocales = this.options.supportedLocales;
+
+    var baseDescriptor = this.options.elementBase || 'DocumentElement'
+    if(typeof baseDescriptor === 'string')
+      this.baseDescriptor = Elements.descriptors.findByName(baseDescriptor);
+    else
+      this.baseDescriptor = baseDescriptor;
+  },
+
+  render: function() {
+    this.title   = this.make('h1', { 'class': 'elements-editor-title' });
+    this.toolbar = this.make('ul', { 'class': 'toolbar' });
+
+    this.renderDocumentTypeChooser();
+    this.renderLocalChooser();
+
+    $(this.el).append(this.title).append(this.toolbar); 
+    
+    return this;
+  },
+
+  // render document type selectbox
+  renderDocumentTypeChooser: function() {
+    // Choosable document types
+    var descriptors = _.sortBy(this.baseDescriptor.descendants(), function(desc) {
+      return desc.get('name');
+    });
+
+    var documentTypeId = this.cid + '-document-type';
+    this.documentTypeLabel = this.make('label', { for: documentTypeId }, I18n.t('js.admin.elements.editor.type'));
+    this.documentTypeChooser = this.make('select', { id: documentTypeId }, this.make('option'));
+    this.documentTypeAction = this.make('li', { 'class': 'action' });
+    $(this.documentTypeAction).append(this.documentTypeLabel).append(this.documentTypeChooser);
+
+    var documentItems = _.each(descriptors, function(desc) {
+      var name = desc.get('name');
+      $(this.documentTypeChooser).append(this.make('option', { value: name }, name));
+    }, this);
+
+    $(this.toolbar).append(this.documentTypeAction)
+    $(this.documentTypeChooser).sb({ selectboxClass: 'selectbox documentChooser' });
+  },
+
+  // render document locale selectbox
+  renderLocalChooser: function() {
+    if(this.supportedLocales && this.supportedLocales.length > 1) {
+      var localeChooserId = this.cid + '-document-locale';
+      this.localeChooserLabel = this.make('label', { for: localeChooserId }, I18n.t('js.admin.elements.editor.locale'));
+      this.localeChooser = this.make('select', { id: localeChooserId, class: 'localeChooser' });
+      this.localeChooserAction = this.make('li', { 'class': 'action' });
+
+      $(this.localeChooserAction).append(this.localeChooserLabel).append(this.localeChooser);
+      $(this.localeChooserLabel).hide();
+
+      var localeItems = _.each(this.supportedLocales, function(locale) {
+        $(this.localeChooser).append(this.make('option', { value: locale }, locale));
+      }, this);
+
+      $(this.toolbar).append(this.localeChooserAction);
+
+      var self = this;
+      var localeFormater = function() {
+        var locale = $(this).val();
+        return self.make('img', { src: '/images/refinery/icons/flags/' + locale + '.png', alt: locale });
+      };
+
+      $(this.localeChooser).sb({ 
+        selectboxClass: 'selectbox localeChooser',
+        optionFormat: localeFormater,
+        displayFormat: localeFormater
+      });
+    }
+  },
+
+  setTitle: function(title) {
+    $(this.title).html(title);
+  },
+
+  setSelectedLocale: function(locale) {
+    $(this.localeChooser).val(locale).sb('refresh');
+  },
+
+  setSelectedDocumentType: function(type) {
+    $(this.documentTypeChooser).val(type).sb('refresh');
+  }
+
+});

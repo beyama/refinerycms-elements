@@ -1,0 +1,274 @@
+.elements-editor-header {
+  float: left;
+  width: 100%;
+  border-bottom: 1px solid #99998B;
+  height: auto;
+  margin-bottom: 1em;
+}
+
+.elements-editor-header h1 {
+  color: #41403C;
+  border-bottom: none !important;
+  float: left;
+  width: 30%;
+  text-align: left !important;
+}
+
+.elements-editor-header .toolbar {
+  float: right;
+  width: 70%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.elements-editor-header .toolbar .action {
+  float: right;
+  width: auto;
+}
+
+.elements-editor-header .toolbar .action label {
+  display: inline-block;
+  margin: 0;
+  padding: 3px;
+}
+
+.elements-editor-header .toolbar .localeChooser,
+.elements-editor-header .toolbar .documentChooser {
+  float: right;
+  margin: 0 0 10px 5px;
+}
+
+.elements-editor ol.properties {
+  list-style: none;
+  padding: 0;
+  clear: both;
+}
+
+.elements-editor .property.required label sup {
+  color: red;
+}
+
+.elements-editor .wym_box {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.elements-editor .inline-hints {
+  font-weight: normal;
+  font-size: 80%;
+}
+
+.elements-editor .toolbar { 
+  background-color: #fff; 
+  display: inline-block;
+}
+.elements-editor .toolbar a { 
+  border-bottom: none !important;
+}
+
+#page_elements_editor {
+  padding-top: 15px;
+}
+
+.elements-editor span.arrow {
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: 7px;
+  position: absolute;
+  left: 2px;
+  top: 5px;
+  width: 11px;
+  background-image: url(<%= asset_path 'elements/icons/down.gif' %>);
+}
+
+.elements-editor .closed span.arrow {
+  background-image: url(<%= asset_path 'elements/icons/up.gif' %>);
+}
+
+.elements-editor .element-header {
+  position: relative;
+  float: left;
+  width: 100%;
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.elements-editor .element-body {
+  clear: both;
+  border: 1px solid #CCCCCC;
+  border-radius: 5px;
+  padding: 0 10px 10px 10px;
+  box-shadow: 0px 3px 5px #cccccc;
+}
+
+.elements-editor .element-header > span.title { float: left; }
+
+.elements-editor .property.field label span.title,
+.elements-editor .element-header > span.title { padding: 4px 0 0 16px; }
+
+.elements-editor .ui-sortable .element-header > span.title { cursor: move; }
+
+.elements-editor .element-header span.arrow { top: 7px; }
+
+.elements-editor .element-header a.delete { 
+  position: absolute; 
+  top: 6px;
+  right: 1px;
+  border-bottom: none !important;
+}
+
+.elements-editor .element-header .elementChooser { margin-left: 10px; }
+
+.elements-editor .element-body dl.article dd {
+  width: 98%;
+  margin-left: 0;
+}
+
+.elements-editor .field textarea {
+  width: 99%;
+}
+
+/* Colorpicker */
+.colorPicker {
+    left: 0;
+    position: absolute;
+    top: auto;
+    width: 200px;
+}
+
+.farbtastic, .farbtastic .wheel {
+    height: 195px;
+    width: 195px;
+}
+
+.farbtastic {
+    background: none repeat scroll 0 0 #FFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    left: 0;
+    position: relative;
+    top: 1px;
+    z-index: 99999999;
+}
+/* Colorchooser */
+.colorOption .color {
+  display: inline-block;
+  height: 1em;
+  width: 1.5em;
+  margin: 0.2em 0.5em 0 0;
+}
+
+/* List widget */
+.elements-editor .listWidget .dropdownMenu {
+  margin-left: 1em;
+}
+
+.elements-editor .listWidget .dropdownMenu a.toggle {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.elements-editor .listWidget .element-body {
+  padding-right: 10px;
+}
+
+.elements-editor .listWidget ul.items {
+  padding: 0;
+  list-style: none;
+}
+
+/* ImageWidget */
+.imageWidget { }
+
+.imageWidget .current_image_container {
+  position: relative; 
+  float: left;
+}
+
+.imageWidget img.current_picked_image {
+  background: url(<%= asset_path 'elements/image_background.png' %>); 
+}
+
+.resourceWidget .no_resource_selected,
+.imageWidget .no_picked_image_selected {
+  background-repeat: no-repeat;
+  border: none !important;
+  padding: 0 0 0 18px;
+}
+
+.imageWidget .toolbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  background-color: #FFFFFF;
+  padding: 0 4px;
+}
+
+.imageWidget .toolbar a {
+  border: none !important;
+}
+
+/* ResourceWidget */
+.resourceWidget .toolbar { margin-left: 1em; }
+.resourceWidget .toolbar a { padding: 2px; }
+
+/* PictureWidget */
+.pictureWidget .element-body {
+  padding: 5px 5px 10px 5px !important;
+  float: left;
+  width: 106px;
+}
+
+/* PictureListWidget */
+.pictureListWidget ul.items {
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
+.pictureListWidget ul.items li.pictureWidget {
+  float: left;
+  width: 120px;
+  margin: 5px 5px 0 5px;
+}
+
+.pictureListWidget .addPicture {
+  background-repeat: no-repeat;
+  border: none !important;
+  display: inline-block;
+  font-weight: normal;
+  padding: 0 0 0 18px;
+  margin: 6px 0 4px 0;
+}
+
+.pictureListWidget .element-header .addPicture {
+  margin: 4px 0 0 12px;
+}
+
+.galleryWidget .pictureListWidget > .element-body {
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.galleryWidget .pictureListWidget > .element-body li.pictureWidget {
+  margin: 5px 10px 0 0;
+}
+
+.richTextWidget > .element-body {
+  padding-top: 11px;
+}
+
+.ui-dialog .no_picked_image_selected { background: none; } /* No background (icon) in dialog header */
+
+/* ImageCropper */
+.imageCropper form { padding-bottom: 45px; }
+.imageCropper .options label { display: inline; }
+
+/* Page elements editor */
+#page_elements_editor.wym_skin_refinery {
+  background-color: #fff !important;
+}

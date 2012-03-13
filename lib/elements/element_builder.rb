@@ -101,7 +101,12 @@ module Elements
     end
 
     def color(name, attributes={}, &block)
-      attributes = attributes.merge(:minimum => 7, :maximum => 7, :widget => 'EssenceColorView')
+      attributes = attributes.merge(:minimum => 7, :maximum => 7, :widget => 'EssenceColorWidget')
+      self.text(name, attributes, &block)
+    end
+
+    def rich_text(name, attributes={}, &block)
+      attributes = attributes.merge(:widget => 'EssenceRichTextWidget')
       self.text(name, attributes, &block)
     end
 

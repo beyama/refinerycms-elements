@@ -1,7 +1,0 @@
-$(function() {
-  (function(ElementsEditor, templates, helper, widgets) {
-    <% ::Elements::widgets.each do |widget| %>
-      <%= render widget.partial %>
-    <% end %>
-  })(Elements.ElementsEditor, Elements.ElementsEditor.templates, Elements.ElementsEditor.helper, Elements.ElementsEditor.widgets);
-});

@@ -24,16 +24,17 @@ en:
           click_to_edit: Click to edit...
           cancel: Cancel
           submit: OK
-  plugins:
-    refinerycms_elements:
-      title: Elements
-  admin:
-    elements:
-      documents:
-        records:
-          no_items_yet: There are no documents yet. Click "Add New Document" to add your first document.
-        actions:
-          create_new: Add New Document
-        document:
-          edit: Edit this document
-          delete: Remove this document forever
+  refinery:
+    plugins:
+      refinery_elements:
+        title: Elements
+    admin:
+      elements:
+        documents:
+          records:
+            no_items_yet: There are no documents yet. Click "Add New Document" to add your first document.
+          actions:
+            create_new: Add New Document
+          document:
+            edit: Edit this document
+            delete: Remove this document forever

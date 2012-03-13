@@ -1,0 +1,177 @@
+/** 
+ * Base view of all element widgets
+ *
+ * Options:
+ * * sortable: Set to true if element is sortable
+ * * deletable: Set to true if element is deletable
+ *
+ * Events:
+ * * view:delete
+ */
+var elementBaseTmpl = 
+  "{{^headerless}}"                                                                                    +
+  "<div class='element-header'>"                                                                       +
+  "  <span class='toggle arrow'></span>"                                                               +
+  "  <span class='title'>{{title}}</span>"                                                             +
+  "  {{#deletable}}"                                                                                   +
+  "    <a class='delete' href='#'>"                                                                    +
+  "      <img width='16' height='16' src='<%= asset_path 'refinery/icons/delete.png' %>' alt='Delete'>"            +
+  "    </a>"                                                                                           +
+  "  {{/deletable}}"                                                                                   +
+  "</div>"                                                                                             +
+  "{{/headerless}}"                                                                                    +
+  "<div class='element-body clearfix'>"                                                                +
+  "  {{>yield}}"                                                                                       +
+  "  {{^collection}}"                                                                                  +
+  "    <input class='id' type='hidden' name='{{inputName}}[id]' value='{{elementId}}' />"              +
+  "    <input class='type' type='hidden' name='{{inputName}}[type]' value='{{modelName}}' />"          +
+  "    {{#sortable}}"                                                                                  +
+  "      <input class='position' type='hidden' name='{{inputName}}[position]' value='{{position}}' />" +
+  "    {{/sortable}}"                                                                                  +
+  "    {{#deletable}}"                                                                                 +
+  "      <input class='destroy' type='hidden' name='{{inputName}}[_destroy]' value='' />"              +
+  "    {{/deletable}}"                                                                                 +
+  "  {{/collection}}"                                                                                  +
+  "</div>";
+
+Elements.ElementsEditor.ElementBaseWidget = Elements.ElementsEditor.Widget.extend({
+  defaultDescriptor: '',
+
+  tagName: 'li',
+
+  className: 'element',
+
+  template: Elements.helper.mustacheTemplate( elementBaseTmpl ),
+
+  yield: '',
+
+  togglable: true,
+
+  positionSelector: 'input[type=hidden].position:first',
+
+  destroySelector: 'input[type=hidden].destroy:first',
+
+  events: Elements.helper.inheritEvents(Elements.ElementsEditor.Widget, {
+    "click .element-header a.delete": "delete"
+  }),
+
+  initialize: function() {
+    Elements.ElementsEditor.Widget.prototype.initialize.apply(this, arguments);
+
+    this.sortable = this.options.sortable;
+    
+    this.deletable = this.options.deletable;
+
+    if(this.options.descriptor)
+      this.descriptor = this.options.descriptor;
+    else if(this.model)
+      this.descriptor = this.model.constructor.descriptor;
+    else
+      this.descriptor = Elements.descriptors.findByName(this.defaultDescriptor);
+
+    this.parent.bind('view:DOMNodeInserted', function() {
+      this.trigger('view:DOMNodeInserted');
+    }, this);
+
+    
+    this.bind('view:toggle', function() {
+      this.$('.element-header:first').toggleClass('closed');
+      this.$('.element-body:first').slideToggle();
+    }, this);
+
+    if(this.sortable) {
+      this.model.bind('change:position', function(model, value) {
+        this.$(this.positionSelector).val(value);
+      }, this);
+    }
+
+    if(this.deletable) {
+      this.model.bind('change:_destroy', function(model, value) {
+        this.$(this.destroySelector).val(value);
+      }, this);
+    }
+
+  }, 
+
+  getWidgetForProperty: function(name, options) {
+    if(!this.widgets) this.widgets = {};
+
+    var widget;
+    if((widget = this.widgets[name])) return widget;
+
+    var property = this.descriptor.get('properties').findByName(name);
+    widget = Elements.ElementsEditor.getWidget(property);
+
+    if(widget) {
+      var widgetOptions = { 
+        tagName: 'div', 
+        parent: this, 
+        property: property, 
+        model: this.model 
+      }
+      if(options) { _.extend(widgetOptions, options); }
+      var instance = new widget(widgetOptions);
+      this.widgets[name] = instance;
+      return instance;
+    }
+  },
+  
+  getInputName: function() {
+    return this.parent.getInputName() + 
+      (this.property ? '[' + this.property.get('name') + '_attributes]' : '') +
+      (!this.property ? '[' + this.cid.replace('view', '') + ']' : '');
+  },
+
+  getView: function() {
+    var title = '';
+    if(this.property)
+      title = (this.property.get('title') || this.property.get('name')) + ' :: ';
+    title = title + this.elementTitle;
+
+    var view = {
+      elementId: this.model.get('id'),
+      title:  title,
+      sortable: this.sortable,
+      deletable: this.deletable,
+      headerless: this.headerless,
+      modelName: this.model.constructor.modelName,
+      inputName: this.getInputName(),
+      collection: this.collection
+    };
+    if(this.sortable) {
+      view.position = this.model.get('position') || 0;
+      view.inputName = this.getInputName();
+    }
+    return view;
+  },
+
+  render: function() {
+    var el = $(this.el);
+
+    if(this.property) // if not an array
+      el.addClass('property');
+
+    el.html(this.template(this.getView(), {yield: this.yield }));
+
+    return this;
+  },
+
+  delete: function() {
+    if(this.deletable) {
+      this.model.set({ _destroy: true });
+      this.trigger('view:delete', this);
+    }
+    return false;
+  },
+
+  body: function(selector) {
+    var body = this.$('.element-body:first');
+    return selector ? body.find(selector) : body;
+  },
+
+  header: function(selector) {
+    var header = this.$('.element-header:first');
+    return selector ? header.find(selector) : header;
+  },
+
+});

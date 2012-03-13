@@ -1,0 +1,17 @@
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag('farbtastic/farbtastic') %>
+  <%= stylesheet_link_tag('jcrop/jquery.Jcrop.css') %>
+  <%= stylesheet_link_tag('selectbox/jquery.sb.css') %>
+  <%= stylesheet_link_tag('elements') %>
+<% end %>
+
+<% content_for :javascripts do %>
+  <%= javascript_include_tag('mustache-0.3.0.min.js') %>
+  <%= javascript_include_tag('underscore-1.1.7-min.js') %>
+  <%= javascript_include_tag('backbone-0.5.3-min.js') %>
+  <%= javascript_include_tag('farbtastic/farbtastic.min.js') %>
+  <%= javascript_include_tag('jquery.jeditable.mini.js') %>
+  <%= javascript_include_tag('jquery.Jcrop.min.js') %>
+  <%= javascript_include_tag('jquery.sb.min.js') %>
+  <%= javascript_include_tag('elements') %>
+<% end %>

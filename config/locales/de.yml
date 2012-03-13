@@ -24,16 +24,17 @@ de:
           click_to_edit: Zum editieren klicken ...
           cancel: Abbrechen
           submit: Übernehmen
-  plugins:
-    refinerycms_elements:
-      title: Elements
-  admin:
-    elements:
-      documents:
-        records:
-          no_items_yet: Es sind noch keine Dokumente angelegt. Klick "Neues Dokument anlegen" um dein erstes Dokument hinzuzufügen.
-        actions:
-          create_new: Neues Dokument anlegen
-        document:
-          edit: Bearbeite dieses Dokument
-          delete: Lösche dieses Dokument für immer
+  refinery:
+    plugins:
+      refinery_elements:
+        title: Elements
+    admin:
+      elements:
+        documents:
+          records:
+            no_items_yet: Es sind noch keine Dokumente angelegt. Klick "Neues Dokument anlegen" um dein erstes Dokument hinzuzufügen.
+          actions:
+            create_new: Neues Dokument anlegen
+          document:
+            edit: Bearbeite dieses Dokument
+            delete: Lösche dieses Dokument für immer
