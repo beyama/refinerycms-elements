@@ -72,25 +72,27 @@ describe Elements::Compiler do
 
     it 'should delegate reader' do
       instance = @klass.new
-      user     = ::User.new
+      user     = ::Refinery::User.new
       user.id  = 23
       instance.any_associations.build(:property_id => @any.id, :value => user)
 
       instance.any.should == user
       instance.any_id.should == 23
-      instance.any_type.should == 'User'
+      instance.any_type.should == 'Refinery::User'
     end
 
     it 'should delegate writer' do
       instance = @klass.new
-      user     = ::User.new
+      user     = ::Refinery::User.new
       user.id  = 23
 
       instance.any = user
 
+      instance.any_associations.first.value.should == user
+
       instance.any.should == user
       instance.any_id.should == 23
-      instance.any_type.should == 'User'
+      instance.any_type.should == 'Refinery::User'
 
       instance.any_id *= 2
       instance.any_id.should == 46

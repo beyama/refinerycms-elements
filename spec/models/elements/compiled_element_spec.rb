@@ -6,8 +6,8 @@ describe Elements::Element do
   include Elements::SpecHelper
 
   before do
-    @image = Image.create!(:image => File.new(File.expand_path('../../../images/image.png', __FILE__)))
-    @resource = Resource.create!(:file => File.new(File.expand_path('../../../images/image.png', __FILE__)))
+    @image = ::Refinery::Image.create!(:image => File.new(File.expand_path('../../../images/image.png', __FILE__)))
+    @resource = ::Refinery::Resource.create!(:file => File.new(File.expand_path('../../../images/image.png', __FILE__)))
   end
 
   before(:each) do
@@ -202,7 +202,7 @@ describe Elements::Element do
   context 'serializable_hash' do
 
     before do
-      @user = User.create!(:username => 'testuser', :email => 'testuser@example.org', :password => 'example1234')
+      @user = ::Refinery::User.create!(:username => 'testuser', :email => 'testuser@example.org', :password => 'example1234')
     end
 
     it 'should include all property values' do

@@ -7,8 +7,8 @@ describe Admin::Elements::ImageCropperWidget do
   end 
 
   before(:each) do
-    Image.destroy_all
-    @image = Image.create!(:image => File.new(File.expand_path('../../../../images/image.png', __FILE__)))
+    ::Refinery::Image.destroy_all
+    @image = ::Refinery::Image.create!(:image => File.new(File.expand_path('../../../../images/image.png', __FILE__)))
   end
 
   it 'responds to :show events' do
@@ -31,7 +31,7 @@ describe Admin::Elements::ImageCropperWidget do
   end
 
   it 'responds to :crop events with overwritten image' do
-    count = Image.count
+    count = ::Refinery::Image.count
 
     trigger(:crop, :image_cropper, :id => @image.id, :x => 0, :y => 0, :w => 10, :h => 8)
 
@@ -39,21 +39,21 @@ describe Admin::Elements::ImageCropperWidget do
     @image.width.should == 10
     @image.height.should == 8
 
-    Image.count.should == count
+    ::Refinery::Image.count.should == count
   end
 
   it 'responds to :crop events with copied image' do
-    count = Image.count
+    count = ::Refinery::Image.count
 
     response = trigger(:crop, :image_cropper, :id => @image.id, :x => 0, :y => 0, :w => 10, :h => 8, :save_as_copy => true)
     data = JSON.parse(response.first)
 
-    new_image = Image.find(data['id'])
+    new_image = ::Refinery::Image.find(data['id'])
     new_image.width.should == 10
     new_image.height.should == 8
 
     @image.should_not == new_image
 
-    Image.count.should == count + 1
+    ::Refinery::Image.count.should == count + 1
   end
 end

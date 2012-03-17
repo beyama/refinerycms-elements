@@ -1,3 +1,6 @@
+//= require i18n
+//= require i18n/translations
+
 //= require elements/elements
 //= require elements/helper
 

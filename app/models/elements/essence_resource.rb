@@ -1,6 +1,6 @@
 module Elements
   class EssenceResource < Essence
-    belongs_to :value, :class_name => '::Resource'
+    belongs_to :value, :class_name => '::Refinery::Resource'
 
     def serializable_hash(options=nil)
       if value.present? 

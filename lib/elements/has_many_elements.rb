@@ -43,20 +43,16 @@ module Elements
       end
     end
 
-    module InstanceMethods
-
-      def element_translation
-        if @element_translation.nil? || @element_translation.locale != Globalize.locale
-          @element_translation = self.elements.with_locale(Globalize.locale).first
-        end
-
-        @element_translation
+    def element_translation
+      if @element_translation.nil? || @element_translation.locale != Globalize.locale
+        @element_translation = self.elements.with_locale(Globalize.locale).first
       end
 
-      def element_title
-        element_translation ? element_translation.title : nil
-      end
+      @element_translation
+    end
 
+    def element_title
+      element_translation ? element_translation.title : nil
     end
 
   end

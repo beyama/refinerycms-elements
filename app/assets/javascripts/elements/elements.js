@@ -1,6 +1,3 @@
-I18n = {};
-I18n.t = function() { return '- no i18n-js installed' };
-
 window.Elements = {
   /**
    * Generates element descriptors from JSON data

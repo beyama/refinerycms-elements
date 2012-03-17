@@ -6,7 +6,7 @@ module Admin
       responds_to_event :crop, :with => :crop
 
       def dialog(ev)
-        @image = Image.find(ev[:id])
+        @image = ::Refinery::Image.find(ev[:id])
 
         image = @image.image
         @thumb = image.thumb('800x600>')
@@ -19,9 +19,9 @@ module Admin
       end
 
       def crop(ev)
-        @image = Image.find(ev[:id])
+        @image = ::Refinery::Image.find(ev[:id])
         if ev[:save_as_copy]
-          @image = Image.new :image => @image.image.process(:crop, :x => ev[:x], :y => ev[:y], :width => ev[:w], :height => ev[:h]) 
+          @image = ::Refinery::Image.new :image => @image.image.process(:crop, :x => ev[:x], :y => ev[:y], :width => ev[:w], :height => ev[:h]) 
         else
           @image.image.process! :crop, :x => ev[:x], :y => ev[:y], :width => ev[:w], :height => ev[:h] 
         end

@@ -4,7 +4,7 @@ module Elements
     INVALID_NAME_PATTERN = /(?:_id|_attributes|_type|\?|\!|\=)$/
 
     ELEMENT_METHODS = ActiveRecord::Base.instance_methods + 
-      Elements::ElementMethods::InstanceMethods.instance_methods
+      Elements::ElementMethods.instance_methods
 
     NAME_BLACKLIST = \
       ELEMENT_METHODS.uniq.map(&:to_s).reject {|name| name =~ INVALID_NAME_PATTERN } +

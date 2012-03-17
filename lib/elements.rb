@@ -1,6 +1,7 @@
 require 'refinerycms-core'
 require 'acts_as_list'
 require 'apotomo'
+require 'i18n-js'
 
 Apotomo.js_framework = :jquery
 

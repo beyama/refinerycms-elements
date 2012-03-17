@@ -1,6 +1,6 @@
 module Elements
   class Document < ActiveRecord::Base
-    self.set_table_name :element_documents
+    self.table_name = 'element_documents'
 
     acts_as_nested_set :dependent => :destroy  
 

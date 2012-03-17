@@ -8,16 +8,14 @@ module Elements
         :only => [:update, :destroy, :edit, :show] 
     end
 
-    module InstanceMethods
-      protected
+    protected
 
-      def find_element_for_current_locale
-        @element = @page.elements.with_locale(Globalize.locale).first
-      end
+    def find_element_for_current_locale
+      @element = @page.elements.with_locale(Globalize.locale).first
+    end
 
-      def find_descriptors
-        @descriptors = ::Elements::ElementDescriptor.includes(:properties => :items).all 
-      end
+    def find_descriptors
+      @descriptors = ::Elements::ElementDescriptor.includes(:properties => :items).all 
     end
 
   end

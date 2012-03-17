@@ -1,7 +1,7 @@
 <% basename = 'document[elements_attributes]' %>
 
 <%= form_for([:admin, @document]) do |f| %>
-  <%= render :partial => "/shared/admin/error_messages", :locals => {
+  <%= render :partial => "/refinery/admin/error_messages", :locals => {
           :object => @document,
           :include_object_name => true
         } unless @document.errors.empty? %>

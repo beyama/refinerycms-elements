@@ -4,7 +4,7 @@ module Elements
 
     def image_to_hash(image)
       hash = image.serializable_hash
-      ::Image.user_image_sizes.each_pair do |name, size|
+      ::Refinery::Images.user_image_sizes.each_pair do |name, size|
         hash["thumbnail_#{name}"] = image.thumbnail(size).url
       end
       hash['thumbnail'] = image.thumbnail('106x106#c').url

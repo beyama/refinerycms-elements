@@ -1,6 +1,6 @@
 module Elements
   class EssenceAny < Essence
-    set_table_name 'essence_any'
+    self.table_name = 'essence_any'
 
     belongs_to :value, :polymorphic => true
 
