@@ -1,6 +1,6 @@
 <% basename = 'document[elements_attributes]' %>
 
-<%= form_for([:admin, @document]) do |f| %>
+<%= form_for([:admin, :elements, @document]) do |f| %>
   <%= render :partial => "/refinery/admin/error_messages", :locals => {
           :object => @document,
           :include_object_name => true
@@ -15,7 +15,8 @@
                :continue_editing => true,
                :delete_title => t('delete', :scope => 'refinery.admin.elements.document'),
                :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @document.title),
-               :cancel_url => refinery.admin_elements_documents_path
+               :cancel_url => refinery.admin_elements_documents_path,
+               :delete_url => refinery.admin_elements_documents_path
              } %>
 <% end %>
 

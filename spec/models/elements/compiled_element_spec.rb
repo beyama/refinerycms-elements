@@ -1,9 +1,6 @@
 require 'spec_helper'
-require File.expand_path('../../../spec_helper', __FILE__)
 
 describe Elements::Element do
-
-  include Elements::SpecHelper
 
   before do
     @image = ::Refinery::Image.create!(:image => File.new(File.expand_path('../../../images/image.png', __FILE__)))

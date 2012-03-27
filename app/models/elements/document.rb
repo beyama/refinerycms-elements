@@ -1,7 +1,5 @@
 module Elements
   class Document < ActiveRecord::Base
-    self.table_name = 'element_documents'
-
     acts_as_nested_set :dependent => :destroy  
 
     include ::Elements::HasManyElements

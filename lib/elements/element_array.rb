@@ -1,7 +1,7 @@
 module Elements
   class ElementArray
 
-    UNASSIGNABLE_KEYS = %w( id _destroy )
+    UNASSIGNABLE_KEYS = %w( id _destroy type )
 
     instance_methods.each { |m| undef_method m unless m.to_s =~ /^(?:send|object_id)$|^__/ }
 

@@ -5,6 +5,7 @@ module Elements
     included do
       class_attribute :descriptor, :own_properties, :ancestors_and_own_properties
 
+      self.table_name = 'elements'
       self.include_root_in_json = false
 
       ESSENCE_ASSOCIATIONS = Hash.new

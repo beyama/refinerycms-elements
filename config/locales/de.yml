@@ -35,6 +35,8 @@ de:
             no_items_yet: Es sind noch keine Dokumente angelegt. Klick "Neues Dokument anlegen" um dein erstes Dokument hinzuzufügen.
           actions:
             create_new: Neues Dokument anlegen
+            reorder_documents: Dokumente umsortieren
+            reorder_documents_done: Ich bin mit dem Umsortieren fertig
           document:
             edit: Bearbeite dieses Dokument
             delete: Lösche dieses Dokument für immer

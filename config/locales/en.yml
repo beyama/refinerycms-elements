@@ -32,9 +32,11 @@ en:
       elements:
         documents:
           records:
-            no_items_yet: There are no documents yet. Click "Add New Document" to add your first document.
+            no_items_yet: There are no documents yet. Click "Add new document" to add your first document.
           actions:
-            create_new: Add New Document
+            create_new: Add new document
+            reorder_documents: Reorder documents
+            reorder_documents_done: Reorder documents done
           document:
             edit: Edit this document
             delete: Remove this document forever

@@ -13,3 +13,6 @@ window.Elements = {
 
   helper: {}
 };
+
+var path = '<%= asset_path 'refinery/icons/delete.png' %>';
+window.Elements.refineryIconPath = path.slice(0, path.lastIndexOf('/') + 1);

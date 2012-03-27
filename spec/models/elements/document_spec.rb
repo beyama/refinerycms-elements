@@ -1,9 +1,6 @@
 require 'spec_helper'
-require File.expand_path('../../../spec_helper', __FILE__)
 
 describe Elements::Document do
-
-  include Elements::SpecHelper
 
   before(:all) do
     Elements::Types.reset!

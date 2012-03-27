@@ -41,7 +41,7 @@ Elements.ElementsEditor.ElementsEditorHeaderView = Elements.View.extend({
 
     var documentTypeId = this.cid + '-document-type';
     this.documentTypeLabel = this.make('label', { for: documentTypeId }, I18n.t('js.admin.elements.editor.type'));
-    this.documentTypeChooser = this.make('select', { id: documentTypeId }, this.make('option'));
+    this.documentTypeChooser = this.make('select', { id: documentTypeId, class: 'documentChooser' }, this.make('option'));
     this.documentTypeAction = this.make('li', { 'class': 'action' });
     $(this.documentTypeAction).append(this.documentTypeLabel).append(this.documentTypeChooser);
 
@@ -51,7 +51,7 @@ Elements.ElementsEditor.ElementsEditorHeaderView = Elements.View.extend({
     }, this);
 
     $(this.toolbar).append(this.documentTypeAction)
-    $(this.documentTypeChooser).sb({ selectboxClass: 'selectbox documentChooser' });
+    $(this.documentTypeChooser).sb();
   },
 
   // render document locale selectbox
@@ -71,14 +71,15 @@ Elements.ElementsEditor.ElementsEditorHeaderView = Elements.View.extend({
 
       $(this.toolbar).append(this.localeChooserAction);
 
+      var flagsPath = Elements.refineryIconPath + 'flags/';
+
       var self = this;
       var localeFormater = function() {
         var locale = $(this).val();
-        return self.make('img', { src: '/images/refinery/icons/flags/' + locale + '.png', alt: locale });
+        return self.make('img', { src: flagsPath + locale + '.png', alt: locale });
       };
 
       $(this.localeChooser).sb({ 
-        selectboxClass: 'selectbox localeChooser',
         optionFormat: localeFormater,
         displayFormat: localeFormater
       });

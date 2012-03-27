@@ -1,5 +1,4 @@
 require 'spec_helper'
-require File.expand_path('../../../../spec_helper', __FILE__)
 
 describe Admin::Elements::ImageCropperWidget do
   has_widgets do |root|

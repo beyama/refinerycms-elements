@@ -3,26 +3,26 @@ class CreateElementsStructure < ActiveRecord::Migration
 
   def self.up
     BASE_TYPES.each do |type|
-      create_table "essence_#{type.pluralize}" do |t|
+      create_table "elements_essence_#{type.pluralize}" do |t|
         t.belongs_to :element, :null => false
         t.belongs_to :property, :null => false
         t.send type, :value, :null => false
       end
     end
 
-    create_table :essence_images do |t|
+    create_table :elements_essence_images do |t|
       t.belongs_to :element, :null => false
       t.belongs_to :property, :null => false
       t.belongs_to :value
     end
 
-    create_table :essence_resources do |t|
+    create_table :elements_essence_resources do |t|
       t.belongs_to :element, :null => false
       t.belongs_to :property, :null => false
       t.belongs_to :value
     end
 
-    create_table :essence_any do |t|
+    create_table :elements_essence_any do |t|
       t.belongs_to :element, :null => false
       t.belongs_to :property, :null => false
       t.belongs_to :value, :polymorphic => true
@@ -41,7 +41,7 @@ class CreateElementsStructure < ActiveRecord::Migration
     add_index :elements, :type
     add_index :elements, [:attachable_id, :attachable_type, :locale], :unique => true
 
-    create_table :element_descriptors do |t|
+    create_table :elements_element_descriptors do |t|
       t.string     :name, :null => false, :limit => 100
       t.string     :title
       t.text       :description
@@ -50,9 +50,9 @@ class CreateElementsStructure < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :element_descriptors, :name, :unique => true
+    add_index :elements_element_descriptors, :name, :unique => true
 
-    create_table :element_properties do |t|
+    create_table :elements_element_properties do |t|
       t.string     :name, :limit => 100
       t.string     :title
       t.text       :description
@@ -69,15 +69,15 @@ class CreateElementsStructure < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :element_properties, [:name, :descriptor_id], :unique => true
+    add_index :elements_element_properties, [:name, :descriptor_id], :unique => true
 
-    create_table :element_property_items do |t|
+    create_table :elements_element_property_items do |t|
       t.belongs_to :property
       t.string     :typename
       t.integer    :position
     end
 
-    create_table :element_documents do |t|
+    create_table :elements_documents do |t|
       t.integer :parent_id
       t.integer :lft
       t.integer :rgt
@@ -88,19 +88,19 @@ class CreateElementsStructure < ActiveRecord::Migration
   end
 
   def self.down
-    if defined?(UserPlugin)
-      UserPlugin.destroy_all({:name => "elements"})
+    if defined?(Refinery::UserPlugin)
+      Refinery::UserPlugin.destroy_all({:name => "elements"})
     end
 
-    BASE_TYPES.each {|type| drop_table "essence_#{type.pluralize}" }
-    drop_table :essence_images
-    drop_table :essence_resources
-    drop_table :essence_any
+    BASE_TYPES.each {|type| drop_table "elements_essence_#{type.pluralize}" }
+    drop_table :elements_essence_images
+    drop_table :elements_essence_resources
+    drop_table :elements_essence_any
     drop_table :elements
-    drop_table :element_descriptors
-    drop_table :element_properties
-    drop_table :element_property_items
-    drop_table :element_documents
+    drop_table :elements_element_descriptors
+    drop_table :elements_element_properties
+    drop_table :elements_element_property_items
+    drop_table :elements_documents
   end
 
 end

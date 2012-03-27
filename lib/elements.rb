@@ -18,6 +18,18 @@ module Elements
   autoload :Commons,                  'elements/commons'
   autoload :PagesControllerExtension, 'elements/pages_controller_extension'
   autoload :ElementMethods,           'elements/element_methods'
+  autoload :Testing,                  'elements/testing'
 
   class TypeError < ::TypeError; end
+
+  class << self
+    def root
+      @root ||= Pathname.new(File.expand_path('../../', __FILE__))
+    end
+
+    def factory_paths
+      @factory_paths ||= [ root.join("spec/factories").to_s ]
+    end
+  end
+
 end

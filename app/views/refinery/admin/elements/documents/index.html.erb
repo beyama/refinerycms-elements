@@ -4,5 +4,5 @@
 <aside id='actions'>
   <%= render 'actions' %>
 </aside>
-<%= render :partial => "/shared/admin/make_sortable",
+<%= render :partial => "/refinery/admin/make_sortable",
            :locals => {:tree => true} if @documents.many? && !searching? -%>

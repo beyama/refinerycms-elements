@@ -9,13 +9,13 @@ module Refinery
         end
 
         crudify 'elements/document',
-                :class_name => '::Elements::Document',
                 :conditions => nil,
                 :order => "lft ASC",
                 :include => [:elements, :children],
                 :paging => false,
                 :singular_name => 'document',
-                :plural_name => 'documents'
+                :plural_name => 'documents',
+                :redirect_to_url => 'refinery.admin_elements_documents_path'
 
         before_filter :find_descriptors, :only => [:new, :edit, :create, :update]
 

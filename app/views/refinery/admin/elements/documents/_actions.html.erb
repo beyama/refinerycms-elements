@@ -8,11 +8,11 @@
   </li>
   <% if @documents.many? and !searching? %>
     <li>
-      <%= link_to t('.reorder_documents'), refinery.admin_elements_documents_url,
+      <%= link_to t('.reorder_documents'), refinery.admin_elements_documents_path,
                   :id => "reorder_action",
                   :class => "reorder_icon" %>
 
-      <%= link_to t('.reorder_documents_done'), refinery.admin_elements_documents_url,
+      <%= link_to t('.reorder_documents_done'), refinery.admin_elements_documents_path,
                   :id => "reorder_action_done",
                   :style => "display: none;",
                   :class => "reorder_icon" %>

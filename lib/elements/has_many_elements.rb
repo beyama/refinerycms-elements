@@ -44,7 +44,7 @@ module Elements
     end
 
     def element_translation
-      if @element_translation.nil? || @element_translation.locale != Globalize.locale
+      if @element_translation.nil? || @element_translation.locale != Globalize.locale.to_s
         @element_translation = self.elements.with_locale(Globalize.locale).first
       end
 
