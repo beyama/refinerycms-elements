@@ -13,9 +13,16 @@
       <% end %>
     </span>
     <span class='actions'>
-      <%= link_to refinery_icon_tag("application_edit.png"), edit_admin_elements_document_path(document),
-           :title => t('.edit') %>
-      <%= link_to refinery_icon_tag("delete.png"), admin_elements_document_path(document),
+      <%= link_to refinery_icon_tag('page_add.png'),
+          refinery.new_admin_elements_document_path(:parent_id => document.id),
+          :title => t('.new') %>
+
+      <%= link_to refinery_icon_tag("application_edit.png"), 
+          refinery.edit_admin_elements_document_path(document),
+          :title => t('.edit') %>
+
+      <%= link_to refinery_icon_tag("delete.png"),
+          refinery.admin_elements_document_path(document),
           :class => "cancel confirm-delete",
           :title => t('.delete'),
           :confirm => t('message', :scope => 'shared.admin.delete', :title => document.title),

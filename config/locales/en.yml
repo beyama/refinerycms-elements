@@ -40,3 +40,7 @@ en:
           document:
             edit: Edit this document
             delete: Remove this document forever
+            new: Add a new child document
+          form:
+            parent_document: Parent document
+            parent_document_help: You can put a document under another document by selecting it in the list. If you want this document to be a top-level document, just leave it blank.

@@ -40,3 +40,7 @@ de:
           document:
             edit: Bearbeite dieses Dokument
             delete: Lösche dieses Dokument für immer
+            new: Neues Unter-Dokument anlegen
+          form:
+            parent_document: Übergeordnetes Dokument
+            parent_document_help: Sie können ein Dokument einem anderen unterordnen, indem Sie dieses aus der Liste wählen. Soll dieses Dokument auf die oberste Ebene, lassen Sie dieses Feld leer.

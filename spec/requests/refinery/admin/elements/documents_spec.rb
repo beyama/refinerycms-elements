@@ -91,6 +91,8 @@ module Refinery
               page.body.should =~ /Remove this document forever/
               page.body.should =~ /Edit this document/
               page.body.should =~ %r{/refinery/elements/documents/#{::Elements::Document.first.id}/edit}
+              page.body.should =~ /Add a new child document/
+              page.body.should =~ %r{/refinery/elements/documents/new\?parent_id=} 
 
               ::Elements::Document.count.should == 1
             end

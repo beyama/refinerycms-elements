@@ -19,6 +19,10 @@ module Refinery
 
         before_filter :find_descriptors, :only => [:new, :edit, :create, :update]
 
+        def new
+          @document = ::Elements::Document.new(:parent_id => params[:parent_id])
+        end
+
         protected
 
         def find_all_documents
