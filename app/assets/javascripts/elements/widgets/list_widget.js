@@ -72,6 +72,7 @@ Elements.ElementsEditor.widgets.ListWidget = Elements.ElementsEditor.ElementBase
 
     $(this.elementChooser).sb({
       selectboxClass: 'selectbox elementChooser',
+      fixedWidth: true,
       displayFormat: function() { return I18n.t('js.admin.elements.list_view.add_element'); }
     });
   },
