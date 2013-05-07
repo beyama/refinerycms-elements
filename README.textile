@@ -1,5 +1,7 @@
 h1. Refinery CMS Elements
 
+*This repository is not maintained anymore.*
+
 Elements is an "entity–attribute–value model" system for "Refinery CMS":http://refinerycms.com/ . 
 It automatically generates models and forms based on your schema definitions. 
 
@@ -107,7 +109,7 @@ Elements will first look for a partial named '_grandchild_page.html.erb', if not
 
 h3. Views for embedded elements
 
-Elements is using Cells:https://github.com/apotonick/cells for rendering embedded elements. For examples see under 'app/cells/elements/'.
+Elements is using "Cells":https://github.com/apotonick/cells for rendering embedded elements. For examples see under 'app/cells/elements/'.
 
 A Cell-class has to be named like your element with the extension 'Cell', if there was no Cell found, it goes backwards up the type inheritance chain of your element for a Cell with a matching name.
 
@@ -209,6 +211,6 @@ If you want to contribute an enhancement or a fix:
 
 h2. License
 
-Designed and created by Alexander Jentz, Germany. 
+Designed and created by "Alexander Jentz":http://beyama.de, Germany. 
 
 MIT License. See the included MIT-LICENSE file.
